@@ -11,29 +11,38 @@ class BinarySearchTree {
         this.root = null;
     }
 
-    insert(value, root = this.root) {
+    insert(value) {
         const node = new Node(value);
 
-        if(!root) {
-            root = node;
+        if(!this.root) {
+            this.root = node;
             return this;
         }
 
-        if(root.value > node.value) {
-            if(root.right) {
-                this.insert(value, root.right);
-            }
-            this.right = node;
-        }
+        let current = this.root;
+        while(true) {
+            if(value === current.value) return undefined;
 
-        if(root.value < node.value) {
-            if(root.left) {
-                this.insert(value, root.left);
+            if(value < current.value) {
+                if(current.left === null) {
+                    current.left = node;
+                    return this;
+                } else {
+                    current = current.left;
+                }
+            } else if (value > current.value) {
+                if(current.right === null) {
+                    current.right = node;
+                    return this;
+                } else {
+                    current = current.right;
+                }
             }
-            this.left = node;
         }
+    }
 
-        return this;
+    print() {
+        console.log(JSON.stringify(this, null, 2));
     }
 }
 
@@ -43,5 +52,5 @@ tree.insert(90);
 tree.insert(113);
 tree.insert(88);
 tree.insert(91);
-console.log(tree);
+tree.print();
 
